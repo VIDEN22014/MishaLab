@@ -49,8 +49,7 @@ void vector3d::Display() {
 
 
 int main() {
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
+	setlocale(LC_ALL, "ru");
 	vector3d v;
 	v.Init();
 	v.Display();
