@@ -1,132 +1,97 @@
-/*
-¬ар≥ант 12. —творити клас Aqueue Ц структура типу черга, що базуЇтьс€ на масив≥ покажчик≥в ф≥ксованого розм≥ру.
-ѕередбачити, щоб черга мала можлив≥сть вм≥щувати значенн€ типу, що в≥дпов≥даЇ б≥бл≥отечному класу string.
-ѕередбачити функц≥њ Ц члени класу дл€ виконанн€ таких операц≥й:
-аdd() Ц занести у чергу надане значенн€;
-pop() Ц добути ≥ вилучити значенн€ ≥з черги;
-print() Ц вивести ус≥ значенн€ ≥з черги на екран;
-num() Ц повернути к≥льк≥сть значень, що знаход€тьс€ у черз≥;
-isempty() Ц повернути значенн€ true (тип bool), €кщо черга пуста.
-
-\\м≥н€й на св≥й
-*/
-
 #include <iostream>
 #include <Windows.h>
+#include <string>
+
 using namespace std;
 
-class aQueue
-{
+
+struct Book;
+
+class Catalog {
 public:
-	aQueue();
-	aQueue(string x);
-	~aQueue();
-private:
-	class data
-	{
+	class List {
 	public:
-		data(string x)
+		struct Book
 		{
-			this->dani = x;
-			this->next = nullptr;
-		}
-		~data()
-		{
-			delete next;
-		}
-		string Getdata() { return dani; }
-		data* next;
-	private:
-		string dani;
+			string name;
+			string author;
+
+		}book;
+		List* next;
+		List(Book a, List* p = nullptr) { book = a; next = p; };
 	};
+	List* head;
 
-	data* head;
-	data* tail;
+	Catalog() { head = nullptr; }
+	~Catalog() {}
 
-public:
-
-	void add(string x)
-	{
-		if (head == nullptr)
+	void add_book(List::Book a) {
+		if (head==nullptr)
 		{
-			tail = head = new data(x);
+			head = new List(a);
 		}
-		else
-		{
-			tail->next = new data(x);
-			tail = tail->next;
-		}
-	}
-
-	string pop()
-	{
-		string x = head->Getdata();
-		data* del = head;
-		head = head->next;
-		del->next = nullptr;
-		delete del;
-		return x;
-	}
-
-	void print()
-	{
-		cout << "¬с≥ дан≥ в черз≥:" << endl;
-		data* scroll = head;
-		while (scroll != nullptr)
-		{
-			cout << scroll->Getdata() << " " << endl;
-			scroll = scroll->next;
+		else {
+			List* temp=this->head;
+			while (temp->next!=nullptr)
+			{
+				temp = temp->next;
+			}
+			temp->next = new List(a);
 		}
 	}
-	int num()
-	{
-		int num = 0;
-		data* scroll = head;
-		while (scroll != nullptr)
+	void del_book() {
+		List* temp = head;
+		while (temp != nullptr)
 		{
-			num++;
-			scroll = scroll->next;
-		}
-		return num;
-	}
-	bool isempty()
-	{
-		if (head == nullptr)
-		{
-			return true;
+			if (temp->next == nullptr) {
+				head = nullptr;
+				
+			}
+			else if(temp->next->next == nullptr) {
+				temp->next = nullptr;
+			}
+			temp = temp->next;
 		}
 	}
-
+	void show_cataloque() {
+		List* temp=head;
+		cout << "Books Catalouqe : " << endl;
+		while (temp != nullptr) {
+			cout << temp->book.author<<" -- " << temp->book.name<<endl;
+			temp = temp->next;
+		}
+		cout << endl;
+	}
+	void find_by_author(string auth) {
+		List* temp = head;
+		cout << "Book by author : " << auth << endl;
+		while (temp != nullptr&& temp->book.author==auth) {
+			cout << temp->book.name << endl;
+			temp = temp->next;
+		}
+	}
 };
-
-aQueue::aQueue()
-{
-	tail = head = nullptr;
-}
-
-aQueue::aQueue(string x)
-{
-	tail = head = new data(x);
-}
-
-aQueue::~aQueue()
-{
-	delete head;
-	delete tail;
-}
 
 int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	aQueue x;
-	x.add("lol");
-	x.add("x");
-	x.add("z");
+	Catalog::List::Book b;
+	b.name = "C++ for Begginers";
+	b.author = "Byarne Stroustrup";
 
-	x.print();
-	x.pop();
-	x.print();
-	//cout << "Hello World!\n";
+	Catalog a;
+	a.add_book(b);
+	b.author = "Bruce Ekkel";
+	b.name = "Thinking in C++";
+	a.add_book(b);
+
+	a.show_cataloque();
+	a.del_book();
+	a.show_cataloque();
+	a.del_book();
+	a.del_book();
+	a.del_book();
+	return 0;
 }
