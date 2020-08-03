@@ -1,57 +1,70 @@
 #include <iostream>
 #include <vector>
+#include<iterator>
 #include <Windows.h>
 using namespace std;
 
 class vector3d {
-	vector<vector<vector<int>>> vect;
+	vector<int> vect;
 public:
-	void Init();
-	void Display();
+	vector3d(){}
+	vector3d(int k, int n, int b) {vect.push_back(k); vect.push_back(n); vect.push_back(b);}
+	~vector3d(){}
+	void Cin();
+	void Cout();
+	vector3d minus(vector<int> a, vector<int> b)
+	{
+		vector<int> temp;
+		/*temp.resize(3);*/
+		cout << "Minus : ";
+		for (int i = 0; i < 3; i++) {
+			temp[i]=a[i] - b[i];
+			cout << temp[i] << " ";
+		}
+		cout << endl;
+	}
+
+	vector3d sum(vector<int> a, vector<int> b)
+	{
+		vector<int> temp;
+		/*temp.resize(3);*/
+		cout << "Sum : ";
+		for (int i = 0; i < 3; i++) {
+			temp[i] = a[i] + b[i];
+			cout << temp[i] << " ";
+		}
+		cout << endl;
+	}
+
+	void dovjuna(vector<int> a)
+	{
+		int dovjuna;
+		
+		dovjuna = pow(pow(a[1], 2) + pow(a[2], 2) + pow(a[3], 2), 1.0 / 2);
+		cout << "Dovjuna : " << dovjuna << endl;
+	}
 	
 };
 
-void vector3d::Init(){
-	cout << "¬вед≥ть ширину, довготу ≥ висоту вектора" << endl;
-	int a, b, h;
-	cin >> a >> b >> h;
-	vect.clear();
-	vect.resize(a);
-
-	for (int i = 0; i < a; i++)
-	{
-		vect[i].resize(b);
-
-		for (int j = 0; j < b; j++)
-		{
-			vect[i][j].resize(h);
-
-			for (int k = 0; k < h; k++)
-			{
-				cin >> vect[i][j][k];
-			}
-		}
+void vector3d::Cin() {
+	cout << "¬вед≥ть трьохвим≥рний вектор: ";
+	for (int i = 0; i < 3; i++) {
+		vect.resize(3);
+		cin >> vect[i];
 	}
+	
 }
 
-void vector3d::Display() {
-	for (int i = 0; i < vect.size(); i++)
-	{
-		for (int j = 0; j < vect[i].size(); j++)
-		{
-			for (int k = 0; k < vect[i][j].size(); k++)
-			{
-				cout << vect[i][j][k] << " ";
-			}
-		}
-	}
+void vector3d::Cout() {
+		copy(vect.begin(), vect.end(), ostream_iterator<int>(cout, " "));
 }
 
 
 int main() {
-	setlocale(LC_ALL, "ru");
-	vector3d v;
-	v.Init();
-	v.Display();
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	vector3d v(10,3,2);
+	v.Cin();
+	v.Cout();
 	return 0;
 }
