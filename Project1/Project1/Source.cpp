@@ -1,57 +1,72 @@
+[Переслано от Misha Gandabura]
+//Варіант 1. Створити клас для роботи з трьох вимірними
+//векторами.Передбачити функції для виконання наступних операцій :
+//консольне введення і виведення значень вектора; ініціалізація вектора;
+//складання та віднімання векторів; обчислення довжини вектора.
+
 #include <iostream>
-#include <vector>
-#include <Windows.h>
+
 using namespace std;
 
-class vector3d {
-	vector<vector<vector<int>>> vect;
+class Vector3D
+{
 public:
-	void Init();
-	void Display();
-	
+    float x, y, z;
+    void setCoord()
+    {
+        cout << "Input x : ";
+        cin >> x;
+        cout << "Input y : ";
+        cin >> y;
+        cout << "Input z : ";
+        cin >> z;
+    }
+    void getCoord()
+    {
+        cout << "Vector : (" << x << ", " << y << ", " << z << ")" << endl << endl;
+    }
 };
 
-void vector3d::Init(){
-	cout << "Введіть ширину, довготу і висоту вектора" << endl;
-	int a, b, h;
-	cin >> a >> b >> h;
-	vect.clear();
-	vect.resize(a);
+Vector3D a, b;
 
-	for (int i = 0; i < a; i++)
-	{
-		vect[i].resize(b);
-
-		for (int j = 0; j < b; j++)
-		{
-			vect[i][j].resize(h);
-
-			for (int k = 0; k < h; k++)
-			{
-				cin >> vect[i][j][k];
-			}
-		}
-	}
+void vecminus()
+{
+    float x, y, z;
+    x = b.x - a.x;
+    y = b.y - a.y;
+    z = b.z - a.z;
+    cout << "Minus : (" << x << ", " << y << ", " << z << ")" << endl;
 }
 
-void vector3d::Display() {
-	for (int i = 0; i < vect.size(); i++)
-	{
-		for (int j = 0; j < vect[i].size(); j++)
-		{
-			for (int k = 0; k < vect[i][j].size(); k++)
-			{
-				cout << vect[i][j][k] << " ";
-			}
-		}
-	}
+void vecsum()
+{
+    float x, y, z;
+    x = b.x + a.x;
+    y = b.y + a.y;
+    z = b.z + a.z;
+    cout << "Sum : (" << x << ", " << y << ", " << z << ")" << endl;
 }
 
-
-int main() {
-	setlocale(LC_ALL, "ru");
-	vector3d v;
-	v.Init();
-	v.Display();
-	return 0;
+void dovjuna()
+{
+    float x, y, z, dovjuna;
+    x = b.x - a.x;
+    y = b.y - a.y;
+    z = b.z - a.z;
+    dovjuna = pow(pow(x, 2) + pow(y, 2) + pow(z, 2), 1.0 / 2);
+    cout << "Dovjuna : " << dovjuna << endl;
+}
+int main()
+{
+    cout << "Vector A:" << endl;
+    a.setCoord();
+    a.getCoord();
+    cout << "Vector B:" << endl;
+    b.setCoord();
+    b.getCoord();
+    vecminus();
+    vecsum();
+    dovjuna();
+    cin.get();
+    return 0;
 }
